@@ -5,12 +5,12 @@ workflows:
       environment:
         groups:
           - ios_credentials
-        xcode: 12.5
+        xcode: 13.4.1
         cocoapods: default
       scripts:
         # - gem install bundler:2.2.27
         - bundle install
-        - bundle exec fastlane beta
+        - bundle exec fastlane release
       artifacts:
         - ./*.ipa
         - ./*.dSYM.zip        
