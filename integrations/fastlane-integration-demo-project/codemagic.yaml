@@ -28,6 +28,7 @@ workflows:
             find . -name "Podfile" -execdir pod install \;   
         - name: Fastlane  
           script: |
+      
             bundle install
             bundle exec fastlane release
         artifacts:

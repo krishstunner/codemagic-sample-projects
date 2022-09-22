@@ -277,6 +277,7 @@ workflows:
           find . -name "Podfile" -execdir pod install \;   
       - name: Fastlane  
         script: |
+          cd ios
           bundle install
           bundle exec fastlane release  
   flutter-yaml-ios:
