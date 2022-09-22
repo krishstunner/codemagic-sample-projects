@@ -278,7 +278,7 @@ workflows:
       - name: Fastlane  
         script: |
           bundle install
-          bundle exec fastlane release  
+          bundle exec fastlane beta  
   flutter-yaml-ios:
     name: Flutter yaml iOS
     instance_type: mac_pro
