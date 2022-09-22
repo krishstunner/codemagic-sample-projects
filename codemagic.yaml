@@ -278,10 +278,7 @@ workflows:
       - name: Fastlane  
         script: |
           bundle install
-          bundle exec fastlane release
-      artifacts:
-        - ./*.ipa
-        - ./*.dSYM.zip     
+          bundle exec fastlane release  
   flutter-yaml-ios:
     name: Flutter yaml iOS
     instance_type: mac_pro
