@@ -40,13 +40,13 @@ platform :ios do
 			in_house: false # optional but may be required if using match/sigh
 		)
 		
-		increment_build_number(
-			build_number: latest_testflight_build_number(
-				api_key: api_key, 
-				version: "1.0.0"
-			) + 1,
-			xcodeproj: "Runner.xcodeproj"
-		) 
+		# increment_build_number(
+		# 	build_number: latest_testflight_build_number(
+		# 		api_key: api_key, 
+		# 		version: "1.0.0"
+		# 	) + 1,
+		# 	xcodeproj: "Runner.xcodeproj"
+		# ) 
 		
 		clean_build_artifacts 
 		
@@ -59,8 +59,8 @@ platform :ios do
         )
 
 		build_app(
-			project: "fastly.xcodeproj", 
-			scheme: "fastly"
+			project: "Runner.xcodeproj", 
+			scheme: "Runner"
 		)
 		
 		upload_to_testflight(
