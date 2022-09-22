@@ -136,7 +136,7 @@ workflows:
         key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER # Alphanumeric value that identifies the API key, can also reference environment variable such as $APP_STORE_CONNECT_KEY_IDENTIFIER
         issuer_id: $APP_STORE_CONNECT_ISSUER_ID # Alphanumeric value that identifies who created the API key, can also reference environment variable such as $APP_STORE_CONNECT_ISSUER_ID
   ios-manual-code-signing-identities:
-    name: iOS manual code signing identifies
+    name: iOS manual code signing identifiesfa
     instance_type: mac_pro
     working_directory: ios/ios-manual-code-signing-demo-project
     environment:
@@ -253,14 +253,35 @@ workflows:
     working_directory: integrations/fastlane-integration-demo-project
     environment:
       groups:
-        - ios_creds # <-- (group contains variables: APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_KEY_IDENTIFIER, APP_STORE_CONNECT_PRIVATE_KEY, CERTIFICATE_PRIVATE_KEY)
-        - fastlane_credentials # <-- (group contains variables: MATCH_SSH_KEY, MATCH_KEYCHAIN, MATCH_PASSWORD)
+        - ios_credentials # <-- (group contains variables: MATCH_SSH_KEY, MATCH_KEYCHAIN, MATCH_PASSWORD)
       xcode: 13.3.1
       cocoapods: default
     scripts:
-      # - gem install bundler:2.2.27
-      - bundle install
-      - bundle exec fastlane beta
+      - name: Set up keychain to be used for codesigning using Codemagic CLI 'keychain' command
+        script: |
+          keychain initialize
+      - name: Fetch signing files
+        script: |
+          app-store-connect fetch-signing-files "io.codemagic.fastly" --type IOS_APP_STORE --create
+      - name: Use system default keychain
+        script: |
+          keychain add-certificates
+      - name: Set up code signing settings on Xcode project
+        script: |
+          xcode-project use-profiles
+      - name: Get Flutter packages
+        script: |
+          flutter packages pub get
+      - name: Install pods
+        script: |
+          find . -name "Podfile" -execdir pod install \;   
+      - name: Fastlane  
+        script: |
+          bundle install
+          bundle exec fastlane release
+      artifacts:
+        - ./*.ipa
+        - ./*.dSYM.zip     
   flutter-yaml-ios:
     name: Flutter yaml iOS
     instance_type: mac_pro
