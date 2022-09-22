@@ -250,11 +250,11 @@ workflows:
   ios-fastlane:
     name: iOS Fastlane
     instance_type: mac_pro
-    working_directory: integrations/fastlane-integration-demo-project
+    working_directory: integrations/fastlaneflutter
     environment:
       groups:
         - ios_credentials # <-- (group contains variables: MATCH_SSH_KEY, MATCH_KEYCHAIN, MATCH_PASSWORD)
-      xcode: 13.3.1
+      xcode: 13.4.1
       cocoapods: default
     scripts:
       - name: Set up keychain to be used for codesigning using Codemagic CLI 'keychain' command
